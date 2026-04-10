@@ -4,9 +4,9 @@
 
 ---
 
-## 🛠️ Status: Alpha Prototype (Active Development)
+## 🧪 Status: Concept / Scaffold
 
-> **Mobile-First Engine Ready.** Core WebXR session management and Three.js rendering pipeline established. Features an initial alignment logic for overlaying digital models onto physical markers. Optimized for global browser-based AEC delivery.
+> **Architecture & Vision.** This repository documents the systemic blueprints and product vision for Web-based AR verification. Active implementation is currently paused while the project serves as a conceptual framework for global AEC reality-capture.
 
 ---
 
