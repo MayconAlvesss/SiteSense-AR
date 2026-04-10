@@ -2,91 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SiteSense-AR — Professional BIM Overlay</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #000;
-        }
-        #ui-overlay {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 100;
-        }
-        .btn {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 12px 24px;
-            color: white;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.05);
-        }
-        .btn-primary {
-            background: #27ae60;
-            border-color: #2ecc71;
-        }
-        #status-bar {
-            position: absolute;
-            top: 20px;
-            width: 100%;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            pointer-events: none;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>SiteSense-AR — Professional AEC Overlay</title>
+    <link rel="stylesheet" href="./src/style.css">
 </head>
 <body>
-    <div id="status-bar">🚀 SiteSense-AR — Ready for WebXR Session</div>
-    <div id="canvas-container"></div>
-    <div id="ui-overlay">
-        <button id="start-ar" class="btn btn-primary">Enter AR Mode</button>
-        <button id="toggle-xray" class="btn">X-Ray Toggle</button>
-        <button id="reset-alignment" class="btn">Reset Origin</button>
+    <!-- AR Status Indicator -->
+    <div id="status-bar">
+        <div class="status-dot"></div>
+        <span>SiteSense v1.0 — Global BIM Verifier</span>
     </div>
 
-    <script type="module">
-        import { BIMViewer } from './src/renderer/bim_viewer.js';
-        import { XRManager } from './src/camera/xr_manager.js';
-        import { OverlayEngine } from './src/logic/overlay_engine.js';
+    <!-- Scanning Visualizer -->
+    <div id="scanning-overlay"></div>
 
-        const viewer = new BIMViewer(document.getElementById('canvas-container'));
-        const xr = new XRManager(viewer.renderer);
-        const engine = new OverlayEngine(viewer.scene);
+    <!-- Main Scene Container -->
+    <div id="canvas-container"></div>
 
-        // Add a placeholder column
-        const column = viewer.createPlaceholder();
-        column.position.set(0, 0, -2); // 2 meters away
+    <!-- Glassmorphic UI Controls -->
+    <div id="ui-controls">
+        <div class="control-row">
+            <span style="opacity: 0.6; font-size: 14px;">Active Model: Structural_L01.glb</span>
+        </div>
+        
+        <button id="start-ar" class="btn-main">Initialize AR Session</button>
+        
+        <div class="secondary-actions">
+            <button id="toggle-xray" class="btn-secondary">Enable X-Ray</button>
+            <button id="reset-origin" class="btn-secondary">Reset Alignment</button>
+        </div>
 
-        document.getElementById('start-ar').addEventListener('click', () => {
-            xr.startSession();
-        });
+        <div style="font-size: 11px; opacity: 0.4; text-align: center; margin-top: 8px;">
+            Optimized for WebXR | Powered by Three.js
+        </div>
+    </div>
 
-        document.getElementById('toggle-xray').addEventListener('click', () => {
-            engine.toggleXRay(true); // Toggle logic would go here
-        });
-
-        viewer.animate((timestamp, frame) => {
-            const hitPose = xr.updateHitTest(frame);
-            if (hitPose) {
-                // Update specific indicator or logic
-            }
-        });
-    </script>
+    <!-- Main Entry Script -->
+    <script type="module" src="./src/main.js"></script>
 </body>
 </html>

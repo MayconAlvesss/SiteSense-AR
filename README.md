@@ -1,12 +1,12 @@
-# SiteSense-AR 📱 — Web-based Mobile BIM Overlay
+# SiteSense-AR 📱 — Global Web-based Mobile BIM Overlay
 
-> **On-site Augmented Reality (AR) for BIM model verification. Visualize rebar, formwork, and MEP services directly on the physical construction environment using WebXR and Three.js.**
+> **Universal on-site Augmented Reality (AR) for BIM model verification. Visualize rebar, formwork, and MEP services directly on the physical construction environment using WebXR and Three.js.**
 
 ---
 
-## ✅ Status
+## 🛠️ Status: Alpha Prototype (Active Development)
 
-> **Mobile-First Prototype.** Core WebXR session management and Three.js rendering pipeline established. Features an initial alignment logic for overlaying digital models onto physical markers or spatial anchors. Designed for rapid on-site verification without heavy hardware.
+> **Mobile-First Engine Ready.** Core WebXR session management and Three.js rendering pipeline established. Features an initial alignment logic for overlaying digital models onto physical markers. Optimized for global browser-based AEC delivery.
 
 ---
 
