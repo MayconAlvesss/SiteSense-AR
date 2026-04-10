@@ -1,42 +1,56 @@
-# SiteSense-AR: A Field Guide for Site Verification
+<p align="center">
+  <img src="https://img.icons8.com/wired/128/007ACC/marker.png" width="80" />
+</p>
 
-This document provides a procedural overview of using the SiteSense-AR WebXR utility for real-time BIM verification on the construction site.
+# <p align="center">SiteSense-AR</p>
 
----
+<p align="center">
+  <strong>Universal Web-based Augmented Reality for BIM Site Verification.</strong><br>
+  Visualizing structural, MEP, and architectural services directly on the physical construction environment.
+</p>
 
-### Step 1: Preparation & Environment
-SiteSense-AR runs directly in the mobile browser. To ensure high-fidelity tracking, the field engineer should:
-1. Ensure the site has adequate ambient lighting for SLAM (Simultaneous Localization and Mapping).
-2. Download the latest `.glb` or `.gltf` structural export from the project coordinator.
-3. Access the utility via HTTPS (required for WebXR security).
-
-### Step 2: Spatial Calibration (The 3-Point Sync)
-Mapping virtual BIM coordinates to the physical site is done through a 3-point alignment protocol:
-- **Marker A**: Select a known primary grid intersection (e.g., A1/1).
-- **Marker B**: Select a secondary intersection (e.g., A1/5) at least 5 meters away to lock the scale and rotation.
-- **Marker C**: Select a tertiary point for vertical (Z-axis) verification.
-
-The `OverlayEngine` will calculate the RST matrix and lock the BIM model to the digital twin anchors.
-
-### Step 3: Verify and Inspect (X-Ray Mode)
-Once calibrated, use the on-screen UI to:
-- **Toggle Layers**: Filter between Structural, MEP, and Architectural sub-models.
-- **X-Ray Depth**: Adjust transparency to view hidden services behind concrete slabs.
-- **Drift Monitoring**: If the model begins to slide, the system will trigger a SLAM drift warning, requiring a quick 1-point re-sync.
+<p align="center">
+  <img src="https://img.shields.io/badge/Interface-WebXR-007ACC?style=flat-square" />
+  <img src="https://img.shields.io/badge/Engine-Three.js-007ACC?style=flat-square" />
+  <img src="https://img.shields.io/badge/Dev-Vite-007ACC?style=flat-square" />
+  <img src="https://img.shields.io/badge/Status-Beta_Candidate-444444?style=flat-square" />
+</p>
 
 ---
 
-## 🏗️ Technical Foundation
-- **`xr_manager.js`**: Core WebXR session lifecycle.
-- **`overlay_engine.js`**: 3-point spatial transformation logic.
-- **Three.js**: Optimized rendering for mobile mobile GPUs.
+## 🛰️ Reality-BIM Synchronization
+SiteSense-AR bridges the gap between the design office and the canteiro de obras. Utilizing a specialized **3-Point Spatial Alignment** strategy, it maps virtual BIM coordinates to local site physical grids with sub-centimeter theoretical precision.
 
-## ⚡ Deployment
+### Field Operational Flow
+1. **Preparation**: Load optimized `.glb` structural meshes from the project CDE.
+2. **Calibration**: Perform 3-point alignment against known site control points (Grid intersections).
+3. **Verification**: Toggle "X-Ray" transparency modes to inspect services hidden behind slabs or formwork.
+4. **Drift Compensation**: On-the-fly SLAM monitoring to detect and correct tracking deviance.
+
+## 🏗️ Technical Architecture
+
+### 1. The Session (`/camera`)
+- **`xr_manager.js`**: Core life-cycle management for the WebXR session and SLAM sync.
+
+### 2. The Overlay Engine (`/logic`)
+- **`overlay_engine.js`**: Calculations for the Rotation-Scale-Translation (RST) matrix needed for BIM-to-Site locking.
+
+### 3. The Visualization (`/renderer`)
+- **`bim_viewer.js`**: Three.js scene management optimized for high-performance mobile GPUs.
+
+---
+
+## ⚡ Quick Start
+
 ```bash
+# 1. Setup
 npm install
+
+# 2. Launch for Mobile testing (HTTPS required for AR)
 npm run dev -- --host
 ```
-*Tested on Chrome (Android) and WebXR Viewer (iOS).*
 
 ---
-*SiteSense-AR | Augmented Engineering by Maycon Alves.*
+<p align="center">
+  <i>Part of the <b>Nexus-Twin</b> Ecosystem | Engineering Strategy by <b>Maycon Alves</b></i>
+</p>
