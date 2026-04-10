@@ -1,110 +1,67 @@
-# SiteSense-AR 📱 — Global Web-based Mobile BIM Overlay
+# 📱 SiteSense-AR: On-site BIM Overlay
 
-> **Universal on-site Augmented Reality (AR) for BIM model verification. Visualize rebar, formwork, and MEP services directly on the physical construction environment using WebXR and Three.js.**
+**High-Performance Augmented Reality for Civil Engineering Verification.**
 
----
-
-## 🧪 Status: Concept / Scaffold
-
-> **Architecture & Vision.** This repository documents the systemic blueprints and product vision for Web-based AR verification. Active implementation is currently paused while the project serves as a conceptual framework for global AEC reality-capture.
+SiteSense-AR is a Web-based AR utility that projects BIM models (Structural, MEP, Architectural) directly onto the physical environment using the **WebXR Device API**. It enables site engineers to verify rebar, formwork, and service placements against the design model in real-time without proprietary hardware.
 
 ---
 
-## 🚀 Key Features
+## 🛰️ Reality-BIM Synchronization
 
-| Feature | Description |
-|---|---|
-| **WebXR AR Session** | High-performance AR tracking via browser-native WebXR API |
-| **BIM/IFC Mesh Overlay** | Optimized Three.js rendering of BIM geometry (converted to GLB/Three) |
-| **Occlusion Handling** | Basic depth-testing for more realistic overlays in complex environments |
-| **Modular Alignment** | Multi-point alignment system for syncing local coordinate systems to the project grid |
-| **X-Ray Mode** | Toggle-able transparency for seeing MEP services hidden behind slabs or walls |
+Achieving a precise overlay requires mapping the virtual BIM coordinate system to the local site physical grid. SiteSense-AR uses a specialized **3-Point Spatial Alignment** strategy:
+
+1.  **Selection**: The user identifies three known Control Points (e.g., column intersections) on the physical site.
+2.  **Mapping**: These points are correlated with their virtual counterparts in the 3D model.
+3.  **Transformation**: The engine calculates the required Rotation, Scaling, and Translation (RST) matrix to lock the BIM model in place.
 
 ---
 
-## 🛠️ Technical Stack
+## 📂 Implementation Architecture
 
-| Layer | Technology |
-|---|---|
-| **Engine** | Three.js (R160+) |
-| **AR Interface** | WebXR Device API |
-| **Framework** | Vanilla ES6+ / Vite |
-| **Spatial Ops** | WebXR Hit-Testing |
-| **Bundler** | Vite (Production-grade HMR) |
+### 🛡️ XR Manager (`/camera`)
+- Handles the WebXR session lifecycle.
+- Synchronizes theThree.js camera with the physical device pose (SLAM).
+
+### 🔍 Overlay Engine (`/logic`)
+- **`overlay_engine.js`**: Core spatial logic. *[WIP: Implementing Drift Compensation for long-duration sessions]*.
+- **`bim_viewer.js`**: Three.js scene management and material optimizations for outdoor visibility.
+
+### 🧪 Experimental Lab (`/lab`)
+- **`alignment_simulation.js`**: Testing RST matrix precision under variable drift conditions.
 
 ---
 
-## 📂 Project Structure
+## ⚡ Tech & Performance
+- **WebXR**: Native AR tracking on iOS (via WebXR Viewer) and Android (Chrome).
+- **Three.js**: Optimized mesh rendering with custom shaders for "X-ray" occlusion.
 
-```text
-SiteSense-AR/
-├── public/                      # Static assets (3D models, icons)
-│   └── models/                  # Placeholder GLB/GLTF BIM models
-│
-├── src/                         # Application source
-│   ├── camera/
-│   │   └── xr_manager.js        # AR Session life-cycle and XRCamera sync
-│   │
-│   ├── renderer/
-│   │   └── bim_viewer.js        # Three.js Scene, Lights, and Renderer setup
-│   │
-│   ├── logic/
-│   │   └── overlay_engine.js    # Alignment, Scaling, and Occlusion logic
-│   │
-│   ├── config/
-│   │   └── settings.js          # Material properties and AR thresholds
-│   │
-│   ├── main.js                  # Entry point
-│   └── style.css                # Glassmorphic UI overlays
-│
-├── index.html                   # Main entry page
-├── package.json                 # Node dependencies
-├── vite.config.js               # Optimized build config
-└── README.md                    # Professional documentation
+---
+
+## ⚡ Field Usage
+```javascript
+import { OverlayEngine } from './logic/overlay_engine';
+
+const engine = new OverlayEngine();
+
+// Synchronize BIM coordinates to Physical World (Control Points)
+engine.alignModel([
+    { world: [0, 0, 0], model: [100.2, 50.1, 0] }, // Point A (Grid A1)
+    { world: [5, 0, 0], model: [105.2, 50.1, 0] }  // Point B (Grid A2)
+]);
+
+engine.setTransparency(0.4); // Activate X-Ray Mode
 ```
 
 ---
 
-## ⚡ Quick Start
-
-### Step 1 — Install Dependencies
-
-```powershell
-npm install
-```
-
-### Step 2 — Start Development Server
-
-```powershell
-npm run dev -- --host
-```
-
-*Note: AR features require HTTPS or localhost access. Host flag is needed for mobile testing.*
-
----
-
-## 🗺️ Roadmap
-
-- [x] **WebXR Core** — Stable AR session initialization and camera sync
-- [x] **Overlay Scene** — Three.js environment with responsive lighting
-- [x] **Marker Alignment** — Manual 2-point alignment for model positioning
-- [ ] **LiDAR Support** — Real-time mesh occlusion for supported iOS/Android devices
-- [ ] **IFC.js Integration** — Direct .ifc loading and parsing on the client side
-- [ ] **Cloud Model Sync** — Auto-fetching latest models from BIM360/Autodesk Construct
-
----
-
-## 📄 License
-
-Developed for professional recruitment and AEC research purposes.  
-See internal documentation for specific licensing terms.
+## 🛣️ 2028 Vision
+- [ ] **LiDAR Occlusion**: Automated masking of BIM models by physical site elements (walls/shuttering).
+- [ ] **Semantic Highlighting**: "Show me only the Hot Water service pipes."
+- [ ] **Survey Station Integration**: Direct sync with total station coordinates via Bluetooth.
 
 ---
 
 <div align="center">
-  <b>Bridging the gap between the design office and the construction site through WebAR.</b>
-  <br><br>
-  <i>💡 Architecture & Engineering by <b>Maycon Alves</b></i>
-  <br>
-  <a href="https://github.com/MayconAlvesss" target="_blank">GitHub</a> | <a href="https://www.linkedin.com/in/maycon-alves-a5b9402bb/" target="_blank">LinkedIn</a>
+  <i>Part of the <b>Nexus-Twin</b> Ecosystem</i><br>
+  Engineering Strategy & Implementation by **Maycon Alves**
 </div>
