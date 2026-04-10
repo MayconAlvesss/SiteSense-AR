@@ -1,67 +1,42 @@
-# 📱 SiteSense-AR: On-site BIM Overlay
+# SiteSense-AR: A Field Guide for Site Verification
 
-**High-Performance Augmented Reality for Civil Engineering Verification.**
-
-SiteSense-AR is a Web-based AR utility that projects BIM models (Structural, MEP, Architectural) directly onto the physical environment using the **WebXR Device API**. It enables site engineers to verify rebar, formwork, and service placements against the design model in real-time without proprietary hardware.
+This document provides a procedural overview of using the SiteSense-AR WebXR utility for real-time BIM verification on the construction site.
 
 ---
 
-## 🛰️ Reality-BIM Synchronization
+### Step 1: Preparation & Environment
+SiteSense-AR runs directly in the mobile browser. To ensure high-fidelity tracking, the field engineer should:
+1. Ensure the site has adequate ambient lighting for SLAM (Simultaneous Localization and Mapping).
+2. Download the latest `.glb` or `.gltf` structural export from the project coordinator.
+3. Access the utility via HTTPS (required for WebXR security).
 
-Achieving a precise overlay requires mapping the virtual BIM coordinate system to the local site physical grid. SiteSense-AR uses a specialized **3-Point Spatial Alignment** strategy:
+### Step 2: Spatial Calibration (The 3-Point Sync)
+Mapping virtual BIM coordinates to the physical site is done through a 3-point alignment protocol:
+- **Marker A**: Select a known primary grid intersection (e.g., A1/1).
+- **Marker B**: Select a secondary intersection (e.g., A1/5) at least 5 meters away to lock the scale and rotation.
+- **Marker C**: Select a tertiary point for vertical (Z-axis) verification.
 
-1.  **Selection**: The user identifies three known Control Points (e.g., column intersections) on the physical site.
-2.  **Mapping**: These points are correlated with their virtual counterparts in the 3D model.
-3.  **Transformation**: The engine calculates the required Rotation, Scaling, and Translation (RST) matrix to lock the BIM model in place.
+The `OverlayEngine` will calculate the RST matrix and lock the BIM model to the digital twin anchors.
 
----
-
-## 📂 Implementation Architecture
-
-### 🛡️ XR Manager (`/camera`)
-- Handles the WebXR session lifecycle.
-- Synchronizes theThree.js camera with the physical device pose (SLAM).
-
-### 🔍 Overlay Engine (`/logic`)
-- **`overlay_engine.js`**: Core spatial logic. *[WIP: Implementing Drift Compensation for long-duration sessions]*.
-- **`bim_viewer.js`**: Three.js scene management and material optimizations for outdoor visibility.
-
-### 🧪 Experimental Lab (`/lab`)
-- **`alignment_simulation.js`**: Testing RST matrix precision under variable drift conditions.
+### Step 3: Verify and Inspect (X-Ray Mode)
+Once calibrated, use the on-screen UI to:
+- **Toggle Layers**: Filter between Structural, MEP, and Architectural sub-models.
+- **X-Ray Depth**: Adjust transparency to view hidden services behind concrete slabs.
+- **Drift Monitoring**: If the model begins to slide, the system will trigger a SLAM drift warning, requiring a quick 1-point re-sync.
 
 ---
 
-## ⚡ Tech & Performance
-- **WebXR**: Native AR tracking on iOS (via WebXR Viewer) and Android (Chrome).
-- **Three.js**: Optimized mesh rendering with custom shaders for "X-ray" occlusion.
+## 🏗️ Technical Foundation
+- **`xr_manager.js`**: Core WebXR session lifecycle.
+- **`overlay_engine.js`**: 3-point spatial transformation logic.
+- **Three.js**: Optimized rendering for mobile mobile GPUs.
 
----
-
-## ⚡ Field Usage
-```javascript
-import { OverlayEngine } from './logic/overlay_engine';
-
-const engine = new OverlayEngine();
-
-// Synchronize BIM coordinates to Physical World (Control Points)
-engine.alignModel([
-    { world: [0, 0, 0], model: [100.2, 50.1, 0] }, // Point A (Grid A1)
-    { world: [5, 0, 0], model: [105.2, 50.1, 0] }  // Point B (Grid A2)
-]);
-
-engine.setTransparency(0.4); // Activate X-Ray Mode
+## ⚡ Deployment
+```bash
+npm install
+npm run dev -- --host
 ```
+*Tested on Chrome (Android) and WebXR Viewer (iOS).*
 
 ---
-
-## 🛣️ 2028 Vision
-- [ ] **LiDAR Occlusion**: Automated masking of BIM models by physical site elements (walls/shuttering).
-- [ ] **Semantic Highlighting**: "Show me only the Hot Water service pipes."
-- [ ] **Survey Station Integration**: Direct sync with total station coordinates via Bluetooth.
-
----
-
-<div align="center">
-  <i>Part of the <b>Nexus-Twin</b> Ecosystem</i><br>
-  Engineering Strategy & Implementation by **Maycon Alves**
-</div>
+*SiteSense-AR | Augmented Engineering by Maycon Alves.*
