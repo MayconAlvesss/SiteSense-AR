@@ -1,5 +1,7 @@
 # SiteSense-AR 📱 — Global Web-based Mobile BIM Overlay
 
+> **Status:** Concept (2028+)
+
 > **Universal on-site Augmented Reality (AR) for BIM model verification. Visualize rebar, formwork, and MEP services directly on the physical construction environment using WebXR and Three.js.**
 
 ---
@@ -108,3 +110,4 @@ See internal documentation for specific licensing terms.
   <br>
   <a href="https://github.com/MayconAlvesss" target="_blank">GitHub</a> | <a href="https://www.linkedin.com/in/maycon-alves-a5b9402bb/" target="_blank">LinkedIn</a>
 </div>
+
