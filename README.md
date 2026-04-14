@@ -1,6 +1,11 @@
 # SiteSense-AR 📱 — Global Web-based Mobile BIM Overlay
 
-> **Status:** Concept (2028+)
+> [!IMPORTANT]
+> **Project Status: Concept / Scaffold (2028+)**
+> This repository is part of Maycon Alves' technical vision for the AEC Tech ecosystem. It is currently in the **concept and initial architecture phase**. Full development and core implementation will resume after the author returns from his mission in **2028**.
+
+
+
 
 > **Universal on-site Augmented Reality (AR) for BIM model verification. Visualize rebar, formwork, and MEP services directly on the physical construction environment using WebXR and Three.js.**
 
